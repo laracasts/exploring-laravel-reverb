@@ -6,8 +6,16 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import Notification from "@/Components/Notification.vue";
 
 const showingNavigationDropdown = ref(false);
+
+const notifications = ref([
+    {
+        show: true,
+        content: 'Hello world',
+    }
+]);
 </script>
 
 <template>
@@ -148,5 +156,13 @@ const showingNavigationDropdown = ref(false);
                 <slot />
             </main>
         </div>
+
+        <ul>
+            <li v-for="notification in notifications">
+                <Notification v-model:show="notification.show">
+                    {{ notification.content }}
+                </Notification>
+            </li>
+        </ul>
     </div>
 </template>
