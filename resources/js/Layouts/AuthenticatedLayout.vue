@@ -1,17 +1,23 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import {Link} from '@inertiajs/vue3';
 import Notification from "@/Components/Notification.vue";
 
 const showingNavigationDropdown = ref(false);
 
 const notifications = ref([
     {
+        id: 1,
+        show: true,
+        content: 'Hello world',
+    },
+    {
+        id: 2,
         show: true,
         content: 'Hello world',
     }
@@ -75,7 +81,7 @@ const notifications = ref([
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                        <DropdownLink :href="route('profile.edit')"> Profile</DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
@@ -141,7 +147,7 @@ const notifications = ref([
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile.edit')"> Profile</ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
                             </ResponsiveNavLink>
@@ -153,22 +159,23 @@ const notifications = ref([
             <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
+                    <slot name="header"/>
                 </div>
             </header>
 
             <!-- Page Content -->
             <main>
-                <slot />
+                <slot/>
             </main>
         </div>
 
-        <ul>
-            <li v-for="notification in notifications">
-                <Notification v-model:show="notification.show">
+        <div aria-live="assertive"
+             class="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6">
+            <ul class="flex w-full flex-col items-center space-y-4 sm:items-end">
+                <Notification v-for="notification in notifications" v-model:show="notification.show">
                     {{ notification.content }}
                 </Notification>
-            </li>
-        </ul>
+            </ul>
+        </div>
     </div>
 </template>
