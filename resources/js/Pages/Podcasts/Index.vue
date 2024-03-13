@@ -15,7 +15,7 @@
                                 <p class="text-sm font-semibold leading-6 text-gray-900">{{ podcast.name }}</p>
                                 <p class="mt-1 truncate text-xs leading-5 text-gray-500">{{ podcast.description }}</p>
                                 <form v-if="podcast.status !== 3" @submit.prevent="() => publishPodcast(podcast)" class="mt-2">
-                                    <SecondaryButton :disabled="podcast.status !== 1">{{ podcast.status === 1 ? 'Publish' : 'Publishing…' }}</SecondaryButton>
+                                    <SecondaryButton type="submit" :disabled="podcast.status !== 1">{{ podcast.status === 1 ? 'Publish' : 'Publishing…' }}</SecondaryButton>
                                 </form>
                             </div>
                         </div>
@@ -28,6 +28,8 @@
                         </div>
                     </li>
                 </ul>
+
+                <SimplePagination :paginator="podcasts" />
             </div>
         </div>
     </AuthenticatedLayout>
@@ -37,10 +39,17 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import {Head, router} from '@inertiajs/vue3';
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import SimplePagination from "@/Components/SimplePagination.vue";
 
 const props = defineProps(['podcasts']);
 
 const publishPodcast = (podcast) => {
-    router.put()
+    router.put(route('podcasts.publish', podcast.id), {}, {
+        preserveScroll: true,
+    });
 };
+
+setInterval(() => {
+    router.reload();
+}, 1000);
 </script>

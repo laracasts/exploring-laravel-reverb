@@ -24,7 +24,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/podcasts', function (Request $request) {
     return Inertia::render('Podcasts/Index', [
-        'podcasts' => $request->user()->podcasts()->latest()->paginate(10),
+        'podcasts' => $request->user()->podcasts()->latest()->simplePaginate(10),
     ]);
 })->middleware(['auth', 'verified'])->name('podcasts.index');
 
