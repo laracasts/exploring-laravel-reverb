@@ -40,6 +40,9 @@ const notifications = ref([
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('podcasts.index')" :active="route().current('podcasts.index')">
+                                    Your Podcasts
+                                </NavLink>
                             </div>
                         </div>
 
@@ -122,6 +125,9 @@ const notifications = ref([
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('podcasts.index')" :active="route().current('podcasts.index')">
+                            Your Podcasts
                         </ResponsiveNavLink>
                     </div>
 

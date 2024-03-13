@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Jobs\PublishPodcast;
+use App\Models\Podcast;
+use App\PodcastStatus;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +27,13 @@ Route::get('/podcasts', function (Request $request) {
         'podcasts' => $request->user()->podcasts()->latest()->paginate(10),
     ]);
 })->middleware(['auth', 'verified'])->name('podcasts.index');
+
+Route::put('/podcasts/{podcast}/publish', function (Request $request, Podcast $podcast) {
+    $podcast->update(['status' => PodcastStatus::Publishing]);
+    PublishPodcast::dispatch($podcast);
+
+    return back();
+})->middleware(['auth', 'verified'])->name('podcasts.publish');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
