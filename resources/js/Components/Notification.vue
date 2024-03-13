@@ -6,17 +6,17 @@
                 leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100"
                 leave-to-class="opacity-0">
         <li v-if="show"
-            class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+            class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-blue-100 shadow-lg ring-1 ring-black ring-opacity-5">
             <div class="p-4">
                 <div class="flex items-center">
                     <div class="flex w-0 flex-1 justify-between">
-                        <p class="w-0 flex-1 text-sm font-medium text-gray-900">
+                        <p class="w-0 flex-1 text-sm font-medium text-gray-700">
                             <slot></slot>
                         </p>
                     </div>
                     <div class="ml-4 flex flex-shrink-0">
                         <button type="button" @click="show = false"
-                                class="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                class="inline-flex rounded-md bg-blue-50 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             <span class="sr-only">Close</span>
                             <XMarkIcon class="h-5 w-5" aria-hidden="true"/>
                         </button>
@@ -40,7 +40,7 @@ watchEffect(async (onCleanup) => {
 
     const timeout = setTimeout(() => {
         show.value = false
-    }, 3000);
+    }, 5000);
     onCleanup(() => clearTimeout(timeout));
 });
 </script>

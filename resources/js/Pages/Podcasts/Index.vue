@@ -46,10 +46,7 @@ const props = defineProps(['podcasts']);
 const publishPodcast = (podcast) => {
     router.put(route('podcasts.publish', podcast.id), {}, {
         preserveScroll: true,
+        preserveState: false,
     });
 };
-
-setInterval(() => {
-    router.reload();
-}, 1000);
 </script>

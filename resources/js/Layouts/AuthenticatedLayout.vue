@@ -11,16 +11,10 @@ import Notification from "@/Components/Notification.vue";
 const showingNavigationDropdown = ref(false);
 
 const notifications = ref([
-    {
-        id: 1,
-        show: true,
-        content: 'Hello world',
-    },
-    {
-        id: 2,
-        show: true,
-        content: 'Hello world',
-    }
+    // {
+    //     show: true,
+    //     content: 'Hello world',
+    // },
 ]);
 </script>
 
