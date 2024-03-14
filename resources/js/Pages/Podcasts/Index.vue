@@ -37,11 +37,14 @@
 
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head, router} from '@inertiajs/vue3';
+import {Head, router, usePage} from '@inertiajs/vue3';
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SimplePagination from "@/Components/SimplePagination.vue";
+import {onMounted, onUnmounted, toRef} from "vue";
 
 const props = defineProps(['podcasts']);
+
+const podcasts = toRef(props.podcasts);
 
 const publishPodcast = (podcast) => {
     router.put(route('podcasts.publish', podcast.id), {}, {
@@ -49,4 +52,22 @@ const publishPodcast = (podcast) => {
         preserveState: false,
     });
 };
+
+const page = usePage();
+
+onMounted(() => {
+    Echo.private(`App.Models.User.${page.props.auth.user.id}`)
+        .listen('PodcastPublished', (event) => {
+            const index = podcasts.value.data.findIndex((value) => value.id === event.podcast.id);
+
+            if (index > -1) {
+                podcasts.value.data[index].status = event.podcast.status;
+            }
+        });
+});
+
+onUnmounted(() => {
+    Echo.leave(`App.Models.User.${page.props.auth.user.id}`);
+});
+
 </script>

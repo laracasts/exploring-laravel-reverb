@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\PodcastPublished;
 use App\Models\Podcast;
 use App\PodcastStatus;
 use Illuminate\Bus\Queueable;
@@ -32,5 +33,8 @@ class PublishPodcast implements ShouldQueue
             'status' => PodcastStatus::Published,
             'published_at' => now(),
         ]);
+
+        PodcastPublished::dispatch($this->podcast);
+        $this->podcast->user->notify(new \App\Notifications\PodcastPublished($this->podcast));
     }
 }

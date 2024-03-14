@@ -1,21 +1,29 @@
 <script setup>
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import {Link} from '@inertiajs/vue3';
+import {Link, usePage} from '@inertiajs/vue3';
 import Notification from "@/Components/Notification.vue";
 
 const showingNavigationDropdown = ref(false);
 
 const notifications = ref([
-    // {
-    //     show: true,
-    //     content: 'Hello world',
-    // },
 ]);
+
+const page = usePage();
+
+onMounted(() => {
+    Echo.private(`App.Models.User.${page.props.auth.user.id}`)
+        .notification((notification) => {
+            notifications.value.push({
+                show: true,
+                content: notification.content,
+            })
+        });
+});
 </script>
 
 <template>
